@@ -7,6 +7,10 @@ from __future__ import print_function
 import sys
 import logging
 
+from pygments import highlight
+from pygments.lexers import JsonLexer
+from pygments.formatters import TerminalFormatter
+
 from pepper.cli import PepperCli
 from pepper import PepperException
 
@@ -24,7 +28,7 @@ if __name__ == '__main__':
     try:
         cli = PepperCli()
         for exit_code, result in cli.run():
-            print(result)
+            print(highlight(result, JsonLexer(), TerminalFormatter()))
             if exit_code is not None:
                 raise SystemExit(exit_code)
     except PepperException as exc:
